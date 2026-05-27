@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+export async function createCheckout(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -20,6 +20,4 @@ export default async function handler(req, res) {
     'customer_email': email,
     'subscription_data[billing_cycle_anchor]': String(anchorTimestamp),
     'subscription_data[proration_behavior]': 'create_prorations',
-    'success_url': 'https://coachcooper.co.uk/success.html',
-    'cancel_url': 'https://coachcooper.co.uk/checkout.html',
-  
+    'success_url': 'https://coachcooper
