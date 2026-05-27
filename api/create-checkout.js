@@ -11,7 +11,6 @@ export async function createCheckout(req, res) {
   const now = new Date();
   const nextFirst = new Date(now.getFullYear(), now.getMonth() + 1, 1);
   const anchorTimestamp = Math.floor(nextFirst.getTime() / 1000);
-
   const params = new URLSearchParams({
     'mode': 'subscription',
     'payment_method_types[0]': 'card',
@@ -20,4 +19,24 @@ export async function createCheckout(req, res) {
     'customer_email': email,
     'subscription_data[billing_cycle_anchor]': String(anchorTimestamp),
     'subscription_data[proration_behavior]': 'create_prorations',
-    'success_url': 'https://coachcooper
+    'success_url': 'https://coachcooper.co.uk/success.html',
+    'cancel_url': 'https://coachcooper.co.uk/checkout.html',
+  });
+
+  const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.STRIPE_SECRET_KEY}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: params,
+  });
+
+  const session = await response.json();
+
+  if (session.url) {
+    res.status(200).json({ url: session.url });
+  } else {
+    res.status(400).json({ error: session.error });
+  }
+}
