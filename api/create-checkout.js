@@ -14,7 +14,7 @@ export async function createCheckout(req, res) {
   const params = new URLSearchParams({
     'mode': 'subscription',
     'payment_method_types[0]': 'card',
-    'line_items[0][price]': 'price_1Uad0yCAmwgcIfGnTYDX1qz8',
+    'line_items[0][price]': 'price_1Ud4LACAmwgcIfGnvYam83kT',
     'line_items[0][quantity]': '1',
     'customer_email': email,
     'subscription_data[billing_cycle_anchor]': String(anchorTimestamp),
